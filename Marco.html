@@ -1,0 +1,635 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Pagina con area principale, sidebar e ricette</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+    #scopri-fusione {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10000;
+      border: 2px solid #333;
+    }
+
+      #scopri-fusione:hover {
+        background: white;
+      }
+    #custom-tooltip {
+      position: fixed;
+      background: white;
+      color: black;
+      font-size: 12px;
+      padding: 3px 6px;
+      border-radius: 4px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.1s;
+      z-index: 9999;
+    }
+
+    /* AREA PRINCIPALE */
+    #main-area {
+      flex: 1;
+      background:lightblue;
+      border-right: 2px solid #ccc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      position: relative; /* NECESSARIO */
+    }
+
+    /* SIDEBAR A DESTRA */
+    #sidebar {
+      width: 250px;
+      background: #fafafa;
+      overflow-y: auto;
+      border-left: 2px solid #ccc;
+      padding: 10px;
+    }
+
+
+    #sidebar {
+      display: flex;
+      flex-direction: column;
+      padding: 10px;
+    }
+
+      #sidebar .img-container {
+        display: flex;
+        gap: 10px; /* distanza tra le img */
+        flex-wrap: wrap; /* va a capo se non c'è spazio */
+        margin-bottom: 20px;
+      }
+
+      #sidebar img {
+        width: 30px;
+        height: 30px;
+        cursor: grab;
+      }
+    /* TENDINA RICETTE */
+    .dropdown {
+      margin-top: 20px;
+    }
+
+    .dropdown-btn {
+      width: 100%;
+      padding: 10px;
+      background: #ddd;
+      cursor: pointer;
+      border: none;
+      text-align: left;
+      font-size: 16px;
+    }
+
+    .dropdown-content {
+      display: none;
+      background: #eee;
+      margin-top: 5px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .draggable {
+      position: absolute;
+      cursor: grab;
+    }
+
+      .draggable:active {
+        cursor: grabbing;
+      }
+  
+  </style>
+</head>
+<body>
+  <div id="scopri-fusione">Scopri nuova fusione</div>
+  <!-- AREA PRINCIPALE -->
+  <div id="main-area">
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+
+    <h3 id="titoloelementi">Elementi</h3>
+
+    <div class="img-container">
+      <img id="acqua" src="acqua.png" draggable="true" ondragstart="drag(event)">
+      <img id="fuoco" src="fuoco.png" draggable="true" ondragstart="drag(event)">
+      <img id="terra" src="terra.png" draggable="true" ondragstart="drag(event)">
+      <img id="aria" src="aria.png" draggable="true" ondragstart="drag(event)">
+      <img id="vapore" src="vapore.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="geyser" src="geyser.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="vento" src="vento.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="fango" src="fango.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="pioggia" src="pioggia.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="lava" src="lava.png" draggable="true" ondragstart="drag(event)" style="display:none">
+
+      <img id="polvere" src="polvere.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="temporale" src="temporale.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="elettricità" src="elettricità.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="starnuto" src="starnuto.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="molecola" src="molecola.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="vita" src="vita.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="nuvola" src="nuvola.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="pianta" src="pianta.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="verme" src="verme.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="sole" src="sole.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="albero" src="albero.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="arcobaleno" src="arcobaleno.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="freddo" src="freddo.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="neve" src="neve.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="alberodinatale" src="alberodinatale.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="foresta" src="foresta.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="sabbia" src="sabbia.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="oasi" src="oasi.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="casa" src="casa.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="cactus" src="cactus.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="vetro" src="vetro.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="frutto" src="frutto.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="melabacata" src="melabacata.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="fungo" src="fungo.png" draggable="true" ondragstart="drag(event)" style="display:none" />
+      <img id="mattone" src="mattone.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="pietra" src="pietra.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="cenere" src="cenere.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="golem" src="golem.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="camino" src="camino.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="SantaClaus" src="SantaClaus.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="regalo" src="regalo.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="montagna" src="montagna.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="montagnainnevata" src="montagnainnevata.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="pupazzodineve" src="pupazzodineve.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="olaf" src="olaf.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="pinocchio" src="pinocchio.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="vulcano" src="vulcano.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="lama" src="lama.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="legno" src="legno.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="carta" src="carta.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="buono" src="buono.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="cielo" src="cielo.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="angelo" src="angelo.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="diavolo" src="diavolo.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="gesu" src="gesu.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="bibbia" src="bibbia.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="chiesa" src="chiesa.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="carbone" src="carbone.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="carota" src="carota.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="zuppa" src="zuppa.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="baita" src="baita.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="insetto" src="insetto.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="libro" src="libro.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="libreria" src="libreria.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="mobileantico" src="mobileantico.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="resina" src="resina.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="gomma" src="gomma.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="piccone" src="piccone.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="sabbiemobili" src="sabbiemobili.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="ferro" src="ferro.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="pneumatico" src="pneumatico.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="acciaio" src="acciaio.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="carrozzeria" src="carrozzeria.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="veicolo" src="veicolo.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="locomotiva" src="locomotiva.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="aereo" src="aereo.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="naturamorta" src="naturamorta.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="fiume" src="fiume.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="pannello" src="pannello.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="clessidra" src="clessidra.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="cimitero" src="cimitero.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="lapide" src="lapide.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="morte" src="morte.png" draggable="true" ondragstart="drag(event)" style="display:none">
+
+      <img id="energia" src="energia.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="eruzione" src="eruzione.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="terremoto" src="terremoto.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="ferrodastiro" src="ferrodastiro.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="matita" src="matita.png" draggable="true" ondragstart="drag(event)" style="display:none">
+      <img id="disegno" src="disegno.png" draggable="true" ondragstart="drag(event)" style="display:none">
+
+      <img id="buonoRayanair" src="buonoRayanair.png" draggable="true" ondragstart="drag(event)" style="display:none">
+
+
+    </div>
+
+    <!-- TENDINA RICETTE -->
+    <div class="dropdown">
+      <button class="dropdown-btn" onclick="toggleDropdown()">Combinazioni trovate ▼</button>
+      <div class="dropdown-content" id="ricette">
+
+        <p>acqua + fuoco = vapore</p>
+        <p>vapore + terra = geyser</p>
+        <p>aria + aria = vento</p>
+        <p>acqua + vapore = nuvola</p>
+        <p>acqua + terra = fango</p>
+        <p>acqua + nuvola = pioggia</p>
+        <p>fuoco + terra = lava</p>
+        <p>terra + vento = polvere</p>
+        <p>pioggia + pioggia = temporale</p>
+        <p>temporale + aria = elettricità</p>
+        <p>polvere + aria = starnuto</p>
+        <p>starnuto + aria = molecola</p>
+        <p>molecola + acqua = vita</p>
+        <p>pioggia + terra = pianta</p>
+        <p>vita + fango = verme</p>
+        <p>nuvola + vento = sole</p>
+        <p>sole + pianta = albero</p>
+        <p>sole + pioggia = arcobaleno</p>
+        <p>sole + nuvola = cielo</p>
+        <p>cielo + vita = angelo</p>
+        <p>angelo + fuoco = diavolo</p>
+
+        <p>vento + pioggia = freddo</p>
+        <p>freddo + acqua = neve</p>
+        <p>neve + albero = alberodinatale</p>
+        <p>albero + albero = foresta</p>
+        <p>sole + terra = sabbia</p>
+        <p>sabbia + acqua = oasi</p>
+        <p>sabbia + pianta = cactus</p>
+        <p>sabbia + fuoco = vetro</p>
+        <p>albero + sole = frutto</p>
+        <p>frutto + verme = melabacata</p>
+        <p>pianta + fango = fungo</p>
+        <p>fuoco + fango = mattone</p>
+        <p>vetro + sabbia = clessidra</p>
+
+
+
+        <p>lava + acqua = pietra</p>
+        <p>lava + vento = cenere</p>
+        <p>pietra + vita = golem</p>
+        <p>mattone + fuoco = camino</p>
+        <p>camino + vita = SantaClaus</p>
+        <p>SantaClaus + alberodinatale = regalo</p>
+        <p>pietra + terra = montagna</p>
+        <p>lava + montagna = vulcano</p>
+        <p>montagna + neve = montagnainnevata</p>
+        <p>neve + neve = pupazzodineve</p>
+        <p>pupazzodineve + sole = carota</p>
+        <p>carota + fungo = zuppa</p>
+        <p>pupazzodineve + vita = olaf</p>
+        <p>pietra + vetro = lama</p>
+        <p>lama + albero = legno</p>
+        <p>legno + angelo = gesu</p>
+        <p>sabbia + fango = sabbiemobili</p>
+        <p>legno + acqua = carta</p>
+        <p>legno + vita = pinocchio</p>
+        <p>carta + regalo = buono</p>
+        <p>legno + pietra = piccone</p>
+        <p>piccone + montagna = ferro</p>
+
+        <p>clessidra + vita = morte</p>
+
+        <p>carta + carta = libro</p>
+        <p>libro + legno = libreria</p>
+        <p>libreria + polvere = mobileantico</p>
+
+
+        <p>morte + pietra = lapide</p>
+        <p>lapide + lapide = cimitero</p>
+
+        <p>ferro + vapore = ferrodastiro</p>
+
+        <p>acqua + montagna = fiume</p>
+
+        <p>mattone + mattone = casa</p>
+        <p>gesu + libro = bibbia</p>
+        <p>gesu + casa = chiesa</p>
+        <p>legno + fuoco = carbone</p>
+        <p>casa + montagnainnevata = baita</p>
+        <p>carbone + legno = matita</p>
+        <p>matita + carta = disegno</p>
+        <p>disegno + frutto= naturamorta</p>
+
+
+
+        <p>vita + pianta = insetto</p>
+        <p>insetto + albero= resina</p>
+        <p>resina + fuoco = gomma</p>
+        <p>ferro + gomma = pneumatico</p>
+        <p>ferro + fuoco = acciaio</p>
+        <p>acciaio + vetro = pannello</p>
+        <p>pannello + sole = energia</p>
+
+
+
+        <p>pneumatico + acciaio = carrozzeria</p>
+        <p>carrozzeria + elettricità = veicolo</p>
+        <p>veicolo + carbone = locomotiva</p>
+        <p>veicolo + aria = aereo</p>
+        <p>energia + terra = terremoto</p>
+        <p>energia + vulcano = eruzione</p>
+
+
+        <p>aereo + buono = buonoRayanair</p>
+
+
+
+
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let draggedElement = null;
+    let isFromSidebar = false;
+
+    const main = document.getElementById("main-area");
+    const sidebar = document.getElementById("sidebar");
+   
+
+
+    // --- TRASCINAMENTO DALLA SIDEBAR ---
+    function drag(ev) {
+      draggedElement = ev.target;
+      isFromSidebar = true;
+    }
+
+    // --- DROP NELL'AREA PRINCIPALE ---
+    main.ondragover = ev => ev.preventDefault();
+
+    main.ondrop = function (ev) {
+      ev.preventDefault();
+
+      if (!draggedElement) return;
+
+      let elementToPlace;
+
+      if (isFromSidebar) {
+        // Duplica se viene dalla sidebar
+        elementToPlace = draggedElement.cloneNode(true);
+        this.appendChild(elementToPlace);
+        makeDraggable(elementToPlace);
+      } else {
+        elementToPlace = draggedElement;
+      }
+
+      // Rimuovi drag nativo
+      elementToPlace.removeAttribute("draggable");
+      elementToPlace.ondragstart = null;
+
+      // Posiziona al punto del drop
+      const rect = this.getBoundingClientRect();
+      elementToPlace.style.position = "absolute";
+      elementToPlace.style.left = (ev.clientX - rect.left - elementToPlace.width / 2) + "px";
+      elementToPlace.style.top = (ev.clientY - rect.top - elementToPlace.height / 2) + "px";
+
+      // --- CONTROLLA FUSIONE AL RILASCIO ---
+      const others = Array.from(document.querySelectorAll('#main-area .draggable')).filter(o => o !== elementToPlace);
+
+      for (let other of others) {
+        if (checkCollision(elementToPlace, other)) {
+          const risultato = controllaRicetta(elementToPlace.id, other.id);
+
+          if (risultato) {
+            const newEl = document.createElement("img");
+            newEl.src = risultato + ".png";
+            newEl.id = risultato;
+            newEl.classList.add("draggable");
+            newEl.style.position = "absolute";
+            newEl.style.left = (elementToPlace.offsetLeft + other.offsetLeft) / 2 + "px";
+            newEl.style.top = (elementToPlace.offsetTop + other.offsetTop) / 2 + "px";
+
+            main.appendChild(newEl);
+            makeDraggable(newEl);
+
+            elementToPlace.remove();
+            other.remove();
+
+            break; // fermati dopo la prima fusione
+          }
+        }
+      }
+
+      draggedElement = null;
+      isFromSidebar = false;
+    };
+
+
+    // --- DROP NELLA SIDEBAR ---
+    sidebar.ondragover = ev => ev.preventDefault();
+
+    sidebar.ondrop = function (ev) {
+      ev.preventDefault();
+      if (!isFromSidebar && draggedElement) {
+        draggedElement.remove();
+      }
+      draggedElement = null;
+    };
+
+    // --- RENDER TRASCINABILE ---
+    function makeDraggable(el) {
+      let offsetX = 0, offsetY = 0;
+
+      el.classList.add("draggable");
+
+      el.addEventListener("mousedown", function (e) {
+        draggedElement = el;
+        isFromSidebar = false;
+        el._isDragging = true;
+        offsetX = e.offsetX;
+        offsetY = e.offsetY;
+      });
+
+      document.addEventListener("mousemove", function (e) {
+        if (!el._isDragging) return;
+
+        const rect = main.getBoundingClientRect();
+        el.style.left = (e.clientX - rect.left - offsetX) + "px";
+        el.style.top = (e.clientY - rect.top - offsetY) + "px";
+      });
+
+      document.addEventListener("mouseup", function () {
+        if (!el._isDragging) return;
+        el._isDragging = false;
+
+        // Prendi tutti gli altri elementi come array
+        const others = Array.from(document.querySelectorAll('#main-area .draggable')).filter(o => o !== el);
+
+        for (let other of others) {
+          if (checkCollision(el, other)) {
+            const risultato = controllaRicetta(el.id, other.id);
+
+            if (risultato) {
+              // Crea nuovo elemento fuso
+              const newEl = document.createElement("img");
+              newEl.src = risultato + ".png";
+              newEl.id = risultato;
+              newEl.classList.add("draggable");
+              newEl.style.position = "absolute";
+              newEl.style.left = (el.offsetLeft + other.offsetLeft) / 2 + "px";
+              newEl.style.top = (el.offsetTop + other.offsetTop) / 2 + "px";
+
+              main.appendChild(newEl);
+              makeDraggable(newEl);
+
+              // Rimuovi gli elementi originali
+              el.remove();
+              other.remove();
+
+              // Fermati dopo la prima fusione per evitare conflitti multipli
+              break;
+            }
+          }
+        }
+
+        draggedElement = null;
+      });
+
+
+    }
+    const divvis = document.getElementById("ricette");
+    const n = divvis.children.length;
+     const elementi = document.getElementById("titoloelementi");
+     let m = 4;
+    let elementitotali = n + 4;
+    elementi.textContent = `Elementi (${m}/${elementitotali})`;
+
+    let visibilita = Array(n).fill(0);
+    function toggleDropdown() {
+      if (divvis.style.display == "block") { divvis.style.display = "none"; } else {
+        divvis.style.display = "block";
+      }
+      for (let i = 0; i < n; i++) {
+        if (visibilita[i] == 0) {
+          divvis.children[i].style.display = "none";
+        } else {
+          divvis.children[i].style.display = "block";
+     
+        }
+      }
+    }
+
+    // --- FUNZIONE COLLISIONE ---
+    function checkCollision(a, b) {
+      const rectA = {
+        left: a.offsetLeft,
+        top: a.offsetTop,
+        right: a.offsetLeft + a.offsetWidth,
+        bottom: a.offsetTop + a.offsetHeight
+      };
+
+      const rectB = {
+        left: b.offsetLeft,
+        top: b.offsetTop,
+        right: b.offsetLeft + b.offsetWidth,
+        bottom: b.offsetTop + b.offsetHeight
+      };
+
+      return !(
+        rectA.right < rectB.left ||
+        rectA.left > rectB.right ||
+        rectA.bottom < rectB.top ||
+        rectA.top > rectB.bottom
+      );
+    }
+
+    // --- LE RICETTE ---
+    const immagini = document.querySelectorAll("img");
+
+    const ricetteDiv = document.getElementById("ricette");
+    const ricette = Array.from(ricetteDiv.querySelectorAll("p"))
+      .map(p => {
+        const match = p.innerText.match(/^\s*(.+)\s*\+\s*(.+)\s*=\s*(.+)\s*$/);
+        if (match) {
+          return {
+            a: match[1].trim(),
+            b: match[2].trim(),
+            result: match[3].trim()
+          };
+        }
+        return null;
+      })
+      .filter(r => r !== null);
+
+    // --- CONTROLLA RICETTA ---
+    function controllaRicetta(elem1, elem2) {
+      const ricetta = ricette.find(r =>
+        (r.a.toLowerCase() === elem1.toLowerCase() && r.b.toLowerCase() === elem2.toLowerCase()) ||
+        (r.a.toLowerCase() === elem2.toLowerCase() && r.b.toLowerCase() === elem1.toLowerCase())
+      );
+
+      if (ricetta) {
+        const paragraphs = document.querySelectorAll("#ricette p");
+        paragraphs.forEach((p, idx) => {
+          const testo = p.innerText.toLowerCase().replace(/\s+/g, '');
+          const ricettaTesto = `${ricetta.a}+${ricetta.b}=${ricetta.result}`.toLowerCase().replace(/\s+/g, '');
+          if (testo === ricettaTesto) {
+            visibilita[idx] = 1;
+            p.style.display = "block";
+            immagini.forEach(imm => {
+              if (ricetta.result == imm.id) {
+                if (imm.style.display == "none") {
+                  imm.style.display = "block";
+                  m = m + 1;
+                }
+                elementi.textContent = `Elementi (${m}/${elementitotali})`;
+                if (m == n + 4) {
+                  alert("Hai finito il gioco! Ti sei meritato il regalo! ");
+                }
+                else if (ricetta.result == "buonoRayanair") {
+                  alert("Hai trovato il tuo regalo! Aspetta un attimo... Vedo che non hai completato il gioco. Per riceverlo devi trovare tutte le ricette! Buon divertimento :)");
+                }
+              }
+            });
+          }
+        });
+
+        return ricetta.result;
+      }
+
+      return null;
+    }
+    // Tooltip personalizzato
+    const tooltip = document.createElement("div");
+    tooltip.id = "custom-tooltip";
+    document.body.appendChild(tooltip);
+    
+    document.addEventListener("mousemove", (e) => {
+      if (e.target.tagName === "IMG") {
+        tooltip.textContent = e.target.id;
+        tooltip.style.left = (e.pageX + 10) + "px";
+        tooltip.style.top = (e.pageY + 10) + "px";
+        tooltip.style.opacity = 1;
+      } else {
+        tooltip.style.opacity = 0;
+      }
+    });
+
+
+   
+    document.getElementById("scopri-fusione").onclick = function () {
+      let aiuto = 0;
+      for (let i = 0; i < n; i++) {
+        if (visibilita[i] == 0 && aiuto==0) {
+          alert(divvis.children[i].textContent);
+          aiuto = 1;
+        } else {
+          if (aiuto == 1) {
+            i = n;
+          }
+        }
+      }
+     
+    };
+  
+  </script>
+
+
+
+
+</body>
+</html>
