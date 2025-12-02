@@ -371,6 +371,8 @@
       if (isFromSidebar) {
         // Duplica se viene dalla sidebar
         elementToPlace = draggedElement.cloneNode(true);
+        elementToPlace.removeAttribute("draggable");
+        elementToPlace.ondragstart = null;
         this.appendChild(elementToPlace);
         makeDraggable(elementToPlace);
       } else {
