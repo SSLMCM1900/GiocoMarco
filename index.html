@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
@@ -436,35 +436,88 @@
 
       el.classList.add("draggable");
 
-      el.addEventListener("mousedown", function (e) {
+      // --- DESKTOP ---
+      el.addEventListener("mousedown", startDragMouse);
+      document.addEventListener("mousemove", moveDragMouse);
+      document.addEventListener("mouseup", endDrag);
+
+      // --- MOBILE ---
+      el.addEventListener("touchstart", startDragTouch, { passive: false });
+      document.addEventListener("touchmove", moveDragTouch, { passive: false });
+      document.addEventListener("touchend", endDrag);
+
+      function startDragMouse(e) {
         draggedElement = el;
         isFromSidebar = false;
         el._isDragging = true;
         offsetX = e.offsetX;
         offsetY = e.offsetY;
-      });
+      }
 
-      document.addEventListener("mousemove", function (e) {
+      function moveDragMouse(e) {
         if (!el._isDragging) return;
-
         const rect = main.getBoundingClientRect();
         el.style.left = (e.clientX - rect.left - offsetX) + "px";
         el.style.top = (e.clientY - rect.top - offsetY) + "px";
-      });
+      }
 
-      document.addEventListener("mouseup", function () {
+      function startDragTouch(e) {
+        e.preventDefault();
+        draggedElement = el;
+        isFromSidebar = false;
+        el._isDragging = true;
+
+        const touch = e.touches[0];
+        const rect = el.getBoundingClientRect();
+
+        offsetX = touch.clientX - rect.left;
+        offsetY = touch.clientY - rect.top;
+      }
+
+      function moveDragTouch(e) {
+        if (!el._isDragging) return;
+
+        e.preventDefault();
+        const touch = e.touches[0];
+        const rect = main.getBoundingClientRect();
+
+        el.style.left = (touch.clientX - rect.left - offsetX) + "px";
+        el.style.top = (touch.clientY - rect.top - offsetY) + "px";
+      }
+
+      // --- FINE TRASCINAMENTO (COMUNE A TUTTI) ---
+      function endDrag() {
         if (!el._isDragging) return;
         el._isDragging = false;
 
-        // Prendi tutti gli altri elementi come array
-        const others = Array.from(document.querySelectorAll('#main-area .draggable')).filter(o => o !== el);
+        const mainRect = main.getBoundingClientRect();
+        const elRect = el.getBoundingClientRect();
+
+        // --- Controllo se l’elemento è completamente fuori dal main ---
+        const fuori =
+          elRect.right < mainRect.left ||
+          elRect.left > mainRect.right ||
+          elRect.bottom < mainRect.top ||
+          elRect.top > mainRect.bottom;
+
+        if (fuori) {
+          // se l'elemento proviene dal main → eliminarlo
+          if (!isFromSidebar) {
+            el.remove();
+          }
+          draggedElement = null;
+          return;
+        }
+
+        // --- Collisioni e fusioni (come già avevi) ---
+        const others = Array.from(document.querySelectorAll('#main-area .draggable'))
+          .filter(o => o !== el);
 
         for (let other of others) {
           if (checkCollision(el, other)) {
             const risultato = controllaRicetta(el.id, other.id);
 
             if (risultato) {
-              // Crea nuovo elemento fuso
               const newEl = document.createElement("img");
               newEl.src = risultato + ".png";
               newEl.id = risultato;
@@ -476,20 +529,15 @@
               main.appendChild(newEl);
               makeDraggable(newEl);
 
-              // Rimuovi gli elementi originali
               el.remove();
               other.remove();
-
-              // Fermati dopo la prima fusione per evitare conflitti multipli
               break;
             }
           }
         }
 
         draggedElement = null;
-      });
-
-
+      }
     }
     const divvis = document.getElementById("ricette");
     const n = divvis.children.length;
