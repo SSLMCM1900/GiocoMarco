@@ -67,7 +67,25 @@
       flex-direction: column;
       padding: 10px;
     }
+    #login-panel {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999; /* sopra tutto */
+    }
 
+    .login-box {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
       #sidebar .img-container {
         display: flex;
         gap: 10px; /* distanza tra le img */
@@ -114,6 +132,13 @@
   </style>
 </head>
 <body>
+  <div id="login-panel">
+    <div class="login-box">
+      <h2>Inserisci il tuo nome utente</h2>
+      <input type="text" id="usernameInput" placeholder="Nome utente">
+      <button onclick="login()">Entra</button>
+    </div>
+  </div>
   <div id="scopri-fusione">Scopri nuova fusione</div>
   <!-- AREA PRINCIPALE -->
   <div id="main-area">
@@ -241,7 +266,6 @@
       <div class="dropdown-content" id="ricette">
 
         <p>acqua + fuoco = vapore</p>
-        <p>vapore + terra = geyser</p>
         <p>aria + aria = vento</p>
         <p>acqua + vapore = nuvola</p>
         <p>acqua + terra = fango</p>
@@ -254,75 +278,79 @@
         <p>starnuto + aria = molecola</p>
         <p>molecola + acqua = vita</p>
         <p>pioggia + terra = pianta</p>
-        <p>vita + fango = verme</p>
         <p>nuvola + vento = sole</p>
         <p>sole + pianta = albero</p>
-        <p>sole + pioggia = arcobaleno</p>
         <p>sole + nuvola = cielo</p>
-        <p>cielo + vita = angelo</p>
-        <p>angelo + fuoco = diavolo</p>
-
         <p>vento + pioggia = freddo</p>
         <p>freddo + acqua = neve</p>
         <p>neve + albero = alberodinatale</p>
-        <p>albero + albero = foresta</p>
         <p>sole + terra = sabbia</p>
-        <p>sabbia + acqua = oasi</p>
-        <p>sabbia + pianta = cactus</p>
         <p>sabbia + fuoco = vetro</p>
-        <p>albero + sole = frutto</p>
-        <p>frutto + verme = melabacata</p>
-        <p>pianta + fango = fungo</p>
         <p>fuoco + fango = mattone</p>
-        <p>vetro + sabbia = clessidra</p>
-        <p>foresta + fuoco = incendio</p>
-
-
         <p>lava + acqua = pietra</p>
-        <p>lava + vento = cenere</p>
-        <p>pietra + vita = golem</p>
         <p>mattone + fuoco = camino</p>
         <p>camino + vita = SantaClaus</p>
         <p>SantaClaus + alberodinatale = regalo</p>
         <p>pietra + terra = montagna</p>
+        <p>pietra + vetro = lama</p>
+        <p>lama + albero = legno</p>
+        <p>legno + acqua = carta</p>
+        <p>carta + regalo = buono</p>
+        <p>legno + pietra = piccone</p>
+        <p>piccone + montagna = ferro</p>
+        <p>vita + pianta = insetto</p>
+        <p>insetto + albero= resina</p>
+        <p>resina + fuoco = gomma</p>
+        <p>ferro + gomma = pneumatico</p>
+        <p>ferro + fuoco = acciaio</p>
+        <p>pneumatico + acciaio = carrozzeria</p>
+        <p>carrozzeria + elettricità = veicolo</p>
+        <p>veicolo + aria = aereo</p>
+        <p>aereo + buono = buonoRayanair</p>
+
+
+
+
+        <p>vapore + terra = geyser</p>
+        <p>vita + fango = verme</p>
+        <p>sole + pioggia = arcobaleno</p>
+        <p>mattone + mattone = casa</p>
+        <p>cielo + vita = angelo</p>
+        <p>angelo + fuoco = diavolo</p>
+        <p>albero + albero = foresta</p>
+        <p>sabbia + acqua = oasi</p>
+        <p>sabbia + pianta = cactus</p>
+        <p>albero + sole = frutto</p>
+        <p>frutto + verme = melabacata</p>
+        <p>pianta + fango = fungo</p>
+        <p>foresta + fuoco = incendio</p>
+        <p>lava + vento = cenere</p>
+        <p>pietra + vita = golem</p>
         <p>lava + montagna = vulcano</p>
         <p>montagna + neve = montagnainnevata</p>
         <p>neve + neve = pupazzodineve</p>
         <p>pupazzodineve + sole = carota</p>
         <p>carota + fungo = zuppa</p>
         <p>pupazzodineve + vita = olaf</p>
-        <p>pietra + vetro = lama</p>
-        <p>lama + albero = legno</p>
         <p>legno + angelo = gesu</p>
         <p>sabbia + fango = sabbiemobili</p>
-        <p>legno + acqua = carta</p>
         <p>legno + vita = pinocchio</p>
-        <p>carta + regalo = buono</p>
-        <p>legno + pietra = piccone</p>
-        <p>piccone + montagna = ferro</p>
-
+        <p>vetro + sabbia = clessidra</p>
         <p>clessidra + vita = morte</p>
-
         <p>clessidra + sole = luna</p>
-
         <p>carta + carta = libro</p>
         <p>libro + legno = libreria</p>
         <p>libreria + polvere = mobileantico</p>
-
         <p>vetro + elettricità = luce</p>
         <p>luna + cielo = notte</p>
-
         <p>morte + pietra = lapide</p>
         <p>lapide + lapide = cimitero</p>
-
         <p>notte + luce = stelle</p>
         <p>ferro + vapore = ferrodastiro</p>
         <p>stelle + sole = universo</p>
         <p>universo + vita = alieno</p>
-
         <p>acqua + montagna = fiume</p>
         <p>stelle + fuoco = cometa</p>
-        <p>mattone + mattone = casa</p>
         <p>gesu + libro = bibbia</p>
         <p>gesu + casa = chiesa</p>
         <p>legno + fuoco = carbone</p>
@@ -330,33 +358,13 @@
         <p>carbone + legno = matita</p>
         <p>matita + carta = disegno</p>
         <p>disegno + frutto= naturamorta</p>
-
-
-
-        <p>vita + pianta = insetto</p>
-        <p>insetto + albero= resina</p>
-        <p>resina + fuoco = gomma</p>
-        <p>ferro + gomma = pneumatico</p>
-        <p>ferro + fuoco = acciaio</p>
         <p>acciaio + vetro = pannello</p>
         <p>pannello + sole = energia</p>
-
-
-
-        <p>pneumatico + acciaio = carrozzeria</p>
-        <p>carrozzeria + elettricità = veicolo</p>
         <p>veicolo + carbone = locomotiva</p>
-        <p>veicolo + aria = aereo</p>
         <p>energia + terra = terremoto</p>
         <p>energia + vulcano = eruzione</p>
         <p>veicolo + universo = razzo</p>
         <p>veicolo + alieno = ufo</p>
-
-        <p>aereo + buono = buonoRayanair</p>
-
-
-
-
 
       </div>
     </div>
@@ -364,12 +372,18 @@
   </div>
 
   <script>
+
+
+
+ 
+
+
     let draggedElement = null;
     let isFromSidebar = false;
 
     const main = document.getElementById("main-area");
     const sidebar = document.getElementById("sidebar");
-   
+
 
 
     // --- TRASCINAMENTO DALLA SIDEBAR ---
@@ -561,8 +575,8 @@
     }
     const divvis = document.getElementById("ricette");
     const n = divvis.children.length;
-     const elementi = document.getElementById("titoloelementi");
-     let m = 4;
+    const elementi = document.getElementById("titoloelementi");
+    let m = 4;
     let elementitotali = n + 4;
     elementi.textContent = `Elementi (${m}/${elementitotali})`;
 
@@ -576,7 +590,7 @@
           divvis.children[i].style.display = "none";
         } else {
           divvis.children[i].style.display = "block";
-     
+
         }
       }
     }
@@ -624,48 +638,68 @@
       .filter(r => r !== null);
 
     // --- CONTROLLA RICETTA ---
+
     function controllaRicetta(elem1, elem2) {
       const ricetta = ricette.find(r =>
         (r.a.toLowerCase() === elem1.toLowerCase() && r.b.toLowerCase() === elem2.toLowerCase()) ||
         (r.a.toLowerCase() === elem2.toLowerCase() && r.b.toLowerCase() === elem1.toLowerCase())
       );
 
-      if (ricetta) {
-        const paragraphs = document.querySelectorAll("#ricette p");
-        paragraphs.forEach((p, idx) => {
-          const testo = p.innerText.toLowerCase().replace(/\s+/g, '');
-          const ricettaTesto = `${ricetta.a}+${ricetta.b}=${ricetta.result}`.toLowerCase().replace(/\s+/g, '');
-          if (testo === ricettaTesto) {
+      if (!ricetta) return null;
+
+      const paragraphs = document.querySelectorAll("#ricette p");
+      paragraphs.forEach((p, idx) => {
+        const testo = p.innerText.toLowerCase().replace(/\s+/g, '');
+        const ricettaTesto = `${ricetta.a}+${ricetta.b}=${ricetta.result}`.toLowerCase().replace(/\s+/g, '');
+
+        if (testo === ricettaTesto) {
+          // 1) segna visibilità
+          if (visibilita[idx] !== 1) {
             visibilita[idx] = 1;
             p.style.display = "block";
-            immagini.forEach(imm => {
-              if (ricetta.result == imm.id) {
-                if (imm.style.display == "none") {
-                  imm.style.display = "block";
-                  m = m + 1;
-                }
-                elementi.textContent = `Elementi (${m}/${elementitotali})`;
-                if (m == n + 4) {
-                  alert("Hai finito il gioco! Ti sei meritato il regalo! ");
-                }
-                else if (ricetta.result == "buonoRayanair") {
-                  alert("Hai trovato il tuo regalo! Aspetta un attimo... Vedo che non hai completato il gioco. Per riceverlo devi trovare tutte le ricette! Buon divertimento :)");
-                }
-              }
-            });
           }
-        });
 
-        return ricetta.result;
-      }
+          // 2) sblocca immagine e incrementa m (punteggio) solo se era nascosta
+          immagini.forEach(imm => {
+            if (ricetta.result == imm.id) {
+              const isVisible = getComputedStyle(imm).display !== "none"; // robusto
+              if (!isVisible) {
+                imm.style.display = "block";
+                m = m + 1;
+              }
+            }
+          });
 
-      return null;
+          // 3) aggiorna UI
+          elementi.textContent = `Elementi (${m}/${elementitotali})`;
+
+          // 4) 🔒 salva nel record dell'utente corrente (chiave = username)
+          const nome = window.utenteCorrente;
+          if (nome) {
+            const utente = loadUser(nome) || { nome, visibilita: Array(n).fill(0), m: 4 };
+            const aggiornato = { ...utente, visibilita, m };
+            saveUser(aggiornato);
+          } else {
+            console.warn("Utente non loggato: impossibile salvare il progresso.");
+          }
+
+          // 5) messaggi
+          if (m === n + 4) {
+            alert("Hai finito il gioco! Ti sei meritato il regalo! ");
+          } else if (ricetta.result === "buonoRayanair") {
+            alert("Hai trovato il tuo regalo! Aspetta un attimo... Vedo che non hai completato il gioco. Per riceverlo devi trovare tutte le ricette! Buon divertimento :)");
+          }
+        }
+      });
+
+      return ricetta.result;
     }
+
     // Tooltip personalizzato
     const tooltip = document.createElement("div");
     tooltip.id = "custom-tooltip";
     document.body.appendChild(tooltip);
-    
+
     document.addEventListener("mousemove", (e) => {
       if (e.target.tagName === "IMG") {
         tooltip.textContent = e.target.id;
@@ -678,11 +712,11 @@
     });
 
 
-   
+
     document.getElementById("scopri-fusione").onclick = function () {
       let aiuto = 0;
       for (let i = 0; i < n; i++) {
-        if (visibilita[i] == 0 && aiuto==0) {
+        if (visibilita[i] == 0 && aiuto == 0) {
           alert(divvis.children[i].textContent);
           aiuto = 1;
         } else {
@@ -691,9 +725,78 @@
           }
         }
       }
-     
+
     };
-  
+
+
+    // --- STORAGE SERVICE (chiavi per-utente) ---
+    const KEY = (username) => `miaApp:utente:${username.trim().toLowerCase()}`;
+
+    function loadUser(username) {
+      const raw = localStorage.getItem(KEY(username));
+      if (!raw) return null;
+      try {
+        return JSON.parse(raw);
+      } catch {
+        console.warn('Dati utente corrotti, riparto da zero:', username);
+        return null;
+      }
+    }
+
+    function saveUser(user) {
+      // user = { nome, visibilita, m }
+      localStorage.setItem(KEY(user.nome), JSON.stringify(user));
+    }
+
+
+   
+
+    function login() {
+      const username = document.getElementById("usernameInput").value.trim();
+      if (!username) return alert("Inserisci un nome!");
+
+      // Ricorda l'utente corrente
+      window.utenteCorrente = username;
+
+      // Carica o crea record
+      let utente = loadUser(username);
+      if (!utente) {
+        utente = { nome: username, visibilita: Array(n).fill(0), m: 4 };
+        saveUser(utente);
+      }
+
+      // Aggiorna stato globale
+      visibilita = Array.isArray(utente.visibilita) && utente.visibilita.length === n
+        ? utente.visibilita.slice()
+        : Array(n).fill(0);
+
+      m = typeof utente.m === "number" ? utente.m : 4;
+
+      // Aggiorna UI: mostra ricette già trovate e immagini sbloccate
+      for (let i = 0; i < n; i++) {
+        const p = divvis.children[i];
+        if (!p) continue;
+
+        if (visibilita[i] === 1) {
+          p.style.display = "block";
+          const ricetta = ricette[i];
+          immagini.forEach(imm => {
+            if (ricetta.result === imm.id) {
+              imm.style.display = "block";
+            }
+          });
+        } else {
+          p.style.display = "none";
+        }
+      }
+
+      elementi.textContent = `Elementi (${m}/${elementitotali})`;
+      const panel = document.getElementById("login-panel");
+      if (panel) panel.style.display = "none";
+    }
+
+
+
   </script>
 
 
